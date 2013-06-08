@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="en-us" />
+<meta name="version" content="1088"/>
+<style>body {font-family:Helvetica}ul.comment{list-style-image:url('https://hackpad.com/static/img/comment.png');} ul.task{list-style-image:url('https://hackpad.com/static/img/unchecked.png');}ul.taskdone{list-style-image:url('https://hackpad.com/static/img/checked.png');} </style><title>/1715$0Anf3xIpVRq</title>
+</head>
+<body><h2>世界奇觀</h2><p><img src='http://www.hawkaoc.net/bbs/data/attachment/forum/dvbbs/20031071133156749.jpg'/></p><p></p><h2>伐木工</h2><ul><li>littleq0903 (<a href="http://about.me/littleq)"><a href='http://about.me/littleq'/>http://about.me/littleq</a>)</a></li>
+<li>hychen</li>
+<li>snowmantw</li>
+<li>自己新增</li></ul>
+
+<h2>專案介紹</h2><p><s>蓋滿 180 天後獲得勝利</s> 把大家需要用的共同資料整理成 Graph，讓大家自行取用。總之我們希望做一個 g0v 版的 Open Graph</p><p></p><ul><li>專案期限：當然是 180 天了</li>
+<li>期間：2013/06/08 ~ 2013/12/05 (180 天）</li>
+<li>工作目標：（分成N階段）</li><ol><li>先用假資料填充，模擬 Graph API 運作情形。</li>
+<li>資料完成結構後再來寫 server</li>
+<li>後端 stream-in 跟前端 stream-out 各 API 討論</li>
+<li>各種權限控管<ol><li>stream-out clients: 如何增加 relation, object ;以及如何管理、註冊、刪除 App</li>
+<li>stream-in sources: 如何增加來源，以及來源需要的屬性設定<ol><li>例如該來源的資料是 mutable 或 imutable&nbsp;</li></ol>
+</ol>
+</ol>
+</ul>
+<ul><li>狀態：填充假資料中</li>
+<li>github repo: <a href="https://github.com/g0v/ww-simulation/"><a href='https://github.com/g0v/ww-simulation/'/>https://github.com/g0v/ww-simulation/</a></a></li>
+<li>example api call&nbsp;<ul><li>[1] <a href="http://g0v.github.io/ww-simulation/api/1/this"><a href='http://g0v.github.io/ww-simulation/api/1/this'/>http://g0v.github.io/ww-simulation/api/1/this</a></a> (先用 this 代替空白）</li>
+<li>[1 -&gt; news] <a href="http://g0v.github.io/ww-simulation/api/1/news"><a href='http://g0v.github.io/ww-simulation/api/1/news'/>http://g0v.github.io/ww-simulation/api/1/news</a></a></li></ul>
+</li>
+<li>Google+ Community<ul><li><a href="https://plus.google.com/communities/106694105832586671823">https://plus.google.com/communities/106694105832586671823</a></li></ul>
+</ul>
+
+<h2>徵求夥伴</h2><ul><li>NeedTxtHacker: 需要 txt hackers 來幫忙填充假資料</li>
+<li>NeedBackendDeveloper: 幫忙寫 Graph server 的 backend server</li></ul>
+
+<h2>技術相關</h2><ul><li>架構圖<img src='https://hackpad-attachments.s3.amazonaws.com/g0vww.hackpad.com_0Anf3xIpVRq_p.56249_1370683920633_worldwonder.png'/></li></ul>
+
+<ul><li>原則<ul><li>connections 應該儘量少、新增限制嚴格而足夠涵蓋大部份物件間的關係<ul><li>related:最基本的雙向關係</li>
+<li>exclusively not related: 排除物件間存在其它關係的關係</li>
+<li>negatively related: 存在單向關係，但是要表達負面資訊</li>
+<li>unidirectional related: 單向關係</li>
+<li>subset: 子集合，可以涵蓋大部份像是屬於或成員關係</li>
+<li>alias: 雙向關係</li>
+<li>update: for immutable objects</li></ul>
+</li>
+<li>objects 因此種類可以隨 stream-in 能提供的各種資源而定，並應該儘量豐富化，例如<ul><li>person</li>
+<li>event</li>
+<li>time</li>
+<li>place</li>
+<li>organization</li>
+<li>message</li></ul>
+</li>
+<li>namespace: 如果 stream-in sources 在提供資料時可以提供 namespace，比如「德國立院」「台灣立院」，這樣可以更容易的搜尋<ul><li>即使沒有 namespace，也可以透過 connections 跟 objects 去搜尋，只是使用 namespace 比較快；黑盒子應應對 namespace 與 type 索引以加速</li></ul>
+</li>
+<li>objects 是可以自由增加的，隨著 stream-in 的來源增加可預想會暴量，所以需要即時處理或效能吃緊的 application 應該要自建應用程式自己的 database 或 memcached 去做最佳最佳化&nbsp;</li>
+<li>stream-out client 所產生的處理後資料也可以回輸成為 stream-in 的來源</li></ul>
+</li>
+<li>議題<ul><li>可以想見物件與關聯的數目會非常多，查詢等一定要做並行化</li>
+<li>真的要做可能要使用 NoSQL 或 GraphDatabase 讓 scale-out 與 CRUD 可以適合我們這計劃的用途</li>
+<li>除了新聞跟立法院公報外，思考還有哪些資料來源可以被接上的，要怎麼接，以及有哪些需求 client application<ul><li>法律的連結與比對資訊？&nbsp;</li></ul>
+</li>
+<li>mutable/imutable&nbsp;<ul><li>對 imutable objects 來說，更新 object 的這個動作，相當於建立一個 diff 過的 patch object，然後用一個 connection 連結起來<ul><li>兼有版本管理資訊</li></ul>
+</li>
+<li>mutable object 的修改會有疑慮是取用該資源的 application ，在該資源更改後會需要做更新，尤其是有快取等情況</li>
+<li>對於一個資源是 mutable 或 immutable，是由 stream-in 方決定的，不是由 client applications 決定</li>
+<li>immutable 可以兼容於 mutable 的操作：比如要找更改後的版本，immutable 只要順著 update 的關係下找就好</li></ul>
+</li></ul>
+</li>
+<li>相關資源<ul><li><a href="https://github.com/thinkaurelius/titan/wiki"><a href='https://github.com/thinkaurelius/titan/wiki'/>https://github.com/thinkaurelius/titan/wiki</a></a>&nbsp;</li></ul>
+<ul style="list-style: none;"><li>&quot;Titan is a distributed <a href='http://en.wikipedia.org/wiki/Graph_database'/>graph database</a> optimized for storing and querying<a href='http://en.wikipedia.org/wiki/Graph_(mathematics)'/>graphs</a> represented over a cluster of machines. &quot;<img src='http://'/></li></ul>
+</ul>
+
+</body>
+</html>
