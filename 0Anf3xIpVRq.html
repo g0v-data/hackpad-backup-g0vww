@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Language" content="en-us" />
-<meta name="version" content="1088"/>
+<meta name="version" content="3302"/>
 <style>body {font-family:Helvetica}ul.comment{list-style-image:url('https://hackpad.com/static/img/comment.png');} ul.task{list-style-image:url('https://hackpad.com/static/img/unchecked.png');}ul.taskdone{list-style-image:url('https://hackpad.com/static/img/checked.png');} </style><title>/1715$0Anf3xIpVRq</title>
 </head>
 <body><h2>世界奇觀</h2><p><img src='http://www.hawkaoc.net/bbs/data/attachment/forum/dvbbs/20031071133156749.jpg'/></p><p></p><h2>伐木工</h2><ul><li>littleq0903 (<a href="http://about.me/littleq)"><a href='http://about.me/littleq'/>http://about.me/littleq</a>)</a></li>
@@ -32,6 +32,10 @@
 <h2>徵求夥伴</h2><ul><li>NeedTxtHacker: 需要 txt hackers 來幫忙填充假資料</li>
 <li>NeedBackendDeveloper: 幫忙寫 Graph server 的 backend server</li></ul>
 
+<h2>重要：決定 License</h2><ul><li>害人之心不可有，防人之心不可無</li>
+<li>我提議只要是在這個 project 下的 code 都用 GPLv3 釋出<ul><li>當然，如果有靜態連結(應該不會？)或類似的議題就可以再討論</li></ul>
+</ul>
+
 <h2>技術相關</h2><ul><li>架構圖<img src='https://hackpad-attachments.s3.amazonaws.com/g0vww.hackpad.com_0Anf3xIpVRq_p.56249_1370683920633_worldwonder.png'/></li></ul>
 
 <ul><li>原則<ul><li>connections 應該儘量少、新增限制嚴格而足夠涵蓋大部份物件間的關係<ul><li>related:最基本的雙向關係</li>
@@ -39,6 +43,7 @@
 <li>negatively related: 存在單向關係，但是要表達負面資訊</li>
 <li>unidirectional related: 單向關係</li>
 <li>subset: 子集合，可以涵蓋大部份像是屬於或成員關係</li>
+<li>superset: 在反向查詢時會有必要？</li>
 <li>alias: 雙向關係</li>
 <li>update: for immutable objects</li></ul>
 </li>
@@ -49,10 +54,12 @@
 <li>organization</li>
 <li>message</li></ul>
 </li>
-<li>namespace: 如果 stream-in sources 在提供資料時可以提供 namespace，比如「德國立院」「台灣立院」，這樣可以更容易的搜尋<ul><li>即使沒有 namespace，也可以透過 connections 跟 objects 去搜尋，只是使用 namespace 比較快；黑盒子應應對 namespace 與 type 索引以加速</li></ul>
+<li>namespace: 如果 stream-in sources 在提供資料時可以提供 namespace，比如「德國立院」「台灣立院」，這樣可以更容易的搜尋<ul><li>即使沒有 namespace，也可以透過 connections 跟 objects 去搜尋，只是使用 namespace 比較快；黑盒子應應對 namespace 與 type 索引以加速</li>
+<li>事實上可以以一群 object 代表 namespace，然後連結到他們的 objects 就是屬於該 namespace 的</li></ul>
 </li>
-<li>objects 是可以自由增加的，隨著 stream-in 的來源增加可預想會暴量，所以需要即時處理或效能吃緊的 application 應該要自建應用程式自己的 database 或 memcached 去做最佳最佳化&nbsp;</li>
-<li>stream-out client 所產生的處理後資料也可以回輸成為 stream-in 的來源</li></ul>
+<li>objects 是可以自由增加的，隨著 stream-in 的來源增加可預想會暴量，所以<b>需要即時處理或效能吃緊的 application 應該要自建應用程式自己的 database 或 memcached 去做最佳最佳化 ，只在有需要時批次或背景處理的把資料拉回來</b></li>
+<li>stream-out client 所產生的處理後資料也可以回輸成為 stream-in 的來源</li>
+<li>因為只提供最 general 的格式與操作，所以進階的使用方式，部份可以包成 SDK 提供，再由其中某些函式呼叫或編譯自動生成數個基本操作</li></ul>
 </li>
 <li>議題<ul><li>可以想見物件與關聯的數目會非常多，查詢等一定要做並行化</li>
 <li>真的要做可能要使用 NoSQL 或 GraphDatabase 讓 scale-out 與 CRUD 可以適合我們這計劃的用途</li>
@@ -66,8 +73,72 @@
 </li></ul>
 </li>
 <li>相關資源<ul><li><a href="https://github.com/thinkaurelius/titan/wiki"><a href='https://github.com/thinkaurelius/titan/wiki'/>https://github.com/thinkaurelius/titan/wiki</a></a>&nbsp;</li></ul>
-<ul style="list-style: none;"><li>&quot;Titan is a distributed <a href='http://en.wikipedia.org/wiki/Graph_database'/>graph database</a> optimized for storing and querying<a href='http://en.wikipedia.org/wiki/Graph_(mathematics)'/>graphs</a> represented over a cluster of machines. &quot;<img src='http://'/></li></ul>
+<ul style="list-style: none;"><li>&quot;Titan is a distributed <a href='http://en.wikipedia.org/wiki/Graph_database'/>graph database</a> optimized for storing and querying<a href='http://en.wikipedia.org/wiki/Graph_(mathematics)'/>graphs</a> represented over a cluster of machines. &quot;</li></ul>
 </ul>
 
-</body>
+<h2>開發進度</h2><p><img src='http://'/></p><ul><li>目前最需要的是要去訂出我們內部要有哪些操作，以及對應的開放 APIs<ul><li>最基本的應該可以參考 graph database 去設計</li>
+<li>例如：增刪改節點 (object)，增刪改連結(connection)</li>
+<li>對外部而言，stream-out 方只能 GET，其他增刪改權限會在 stream-in 方手裡。當然 stream-in 各方只能增刪改自己的節點。GET則都是全域</li>
+<li>系統內部對物件與連結的基本操作<ul><li>CRUD object/connection</li>
+<li>compact:真正去刪除 __delete__ 物件 subset 下的物件</li>
+<li>diff: for object</li>
+<li>由基本操作衍生的進階操作<ul><li>immutable-update on object<ul><li>read current version</li>
+<li>diff &lt;new&gt; &lt;current&gt;</li>
+<li>create patch object</li>
+<li>create connection &lt;update&gt; between &lt;patch&gt; and &lt;current&gt; object</li></ul>
+</li></ul>
+</li></ul>
+</li>
+<li>系統外部可進行的操作與如何映射至內部操作描述<ul><li>stream-in: PUT /id<ul><li>如果目標是物件且是 mutable，則直接修改</li>
+<li>如果目標是物件且是 immutable，則增加一個 update 連結，與新 PUT 版本的物件。這個連結會把新舊版連結起來<ul><li>理論上比較好的作法是只存比較差異後的 diff 資訊</li>
+<li>如果有 PATCH method 就更適合用 diff 了</li></ul>
+</li>
+<li>如果目標是連結，直接更改該連結<ul><li>連結會被改動應該只有刪除與新增比較常見，更改內容似乎用途不大？</li></ul>
+</li></ul>
+</li>
+<li>stream-in: DELETE /id<ul><li>標記為要刪除，實際上等背後使用 compact 時才刪除</li>
+<li>可以全部連結到一個叫 __delete__ 的 primary object instance</li>
+<li>但如果目標是連結，直接刪除。因為沒有物件-連結-連結，只有物件-連結-物件</li></ul>
+</li>
+<li>stream-in: POST &lt;object JSON&gt; /objects<ul><li>新增物件</li></ul>
+</li>
+<li>stream-in: POST &lt;post JSON&gt; /connections<ul><li>新增連結</li></ul>
+</li>
+<li>stream-in/stream-out: GET /&lt;object&gt;/&lt;connection&gt;<ul><li>取得某物件與其指定型別的連結<ul><li>例如：GET /gazette-dialog-001/subset，取得某段公報對話被屬於哪些資源?</li></ul>
+</li></ul>
+</li>
+<li>stream-in/stream-out: POST /search?q...<ul><li>參考 search in RESTful 的設計原則：<a href="http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api?hn"><a href='http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api?hn'/>http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api?hn</a></a></li>
+<li>search 實際上不應該是系統內建功能。而是要像 C++ iterator 那樣是外置的</li></ul>
+</li></ul>
+</li>
+<li>註冊與管理各 stream-in 與 stream-out相關功能/頁面/APIs<ul><li>stream-in 與 stream-out 本身相關資訊也可以 object-connection 的方式儲存</li>
+<li>不過或許 metadata 還是額外放一個資料庫比較好</li></ul>
+</li>
+<li>物件的基本屬性欄位(<b>這還真適合用 Haskell 寫...</b>)<ul><li>mutable: Boolean ::物件是否可被修改</li>
+<li>proxy: URL|EmptyURL ::是否代理某個資源。代理資源意味著 content 不會存在我們自己的 persistent server 中。如果是 EmptyURL 則代表不是</li>
+<li>content: Data ::以 JSON 格式來說，就是 Object, Array, Primary Values 等</li>
+<li>type: String ::由 stream-in 所決定的資源型別，例如 person, event 等</li>
+<li>id: ObjectId</li></ul>
+</li>
+<li>連結的基本屬性欄位<ul><li>type: Related|NotRelated|NegRelated|UniRelated|Subset|Alias|Update</li>
+<li>from: ObjectId ::單向來說，箭頭的開始目標</li>
+<li>to: ObjectId ::單向來說，箭頭的結束目標</li></ul>
+</li>
+<li>primary object instances<ul><li>__delete__: 與此物件相關連 ( subset ) 代表該物件日後將會被真正刪除</li></ul>
+</li></ul>
+</li>
+<li>接著是去看實作的目標，是如何配合著實作出我們所需要的操作</li>
+<li>可以同步進行刻出 stream-in 與 stream-out 兩邊的 APIs&nbsp;</li></ul>
+
+<ul class="comment"><li>所以其實這東西就是像 Django 那樣中間的 framework，提供對外與對內 (persistent system)的操作</li>
+<li>具體來說就是下列這幾種組件：<ul class="comment"><li>對外 APIs 相關者，如 router 跟 request/response handlers</li>
+<li>對各種不同 persistent system 的 adapters ，如 MySQL adapter 跟 Neo4j adapter。adapters 即是對內操作如增刪 objects 等程式實作處</li>
+<li>帳號與權限管理</li>
+<li>搜尋與其他需要內建或可擴充之演算法 plugins</li>
+<li>註冊與管理 stream-in 跟 stream-out 之功能</li>
+<li>metadata database</li>
+<li>commandline/web interface management tools</li></ul>
+</ul>
+
+<h2>Stream-in 資料來源</h2><p></p><h2>Stream-out 應用程式</h2><p></p></body>
 </html>
