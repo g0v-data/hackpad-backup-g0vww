@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Language" content="en-us" />
-<meta name="version" content="4039"/>
+<meta name="version" content="4083"/>
 <style>body {font-family:Helvetica}ul.comment{list-style-image:url('https://hackpad.com/static/img/comment.png');} ul.task{list-style-image:url('https://hackpad.com/static/img/unchecked.png');}ul.taskdone{list-style-image:url('https://hackpad.com/static/img/checked.png');} </style><title>/1715$0Anf3xIpVRq</title>
 </head>
 <body><h2>世界奇觀</h2><p><img src='http://www.hawkaoc.net/bbs/data/attachment/forum/dvbbs/20031071133156749.jpg'/></p><p></p><h2>置頂討論區</h2><ul class="comment"><li>雖然不是什麼公司計畫，可是我覺得我們會需要一個定期的討論。畢竟這個計畫可能不是密集衝刺一兩週就可以做好的專案。</li>
@@ -154,7 +154,8 @@
 
 <h2>後端考慮</h2><p>先列出一些可能的後端，在看上面 spec 發展選擇適當的，列出優缺：</p><ul><li><a href="http://www.neo4j.org/">http://www.neo4j.org/</a></li>
 <li>postgresql: 有奇怪的 sql-fu 的話，就可以作很多 graph query. 9.3 又可以把常見需要 traverse 的，變成 materialized view. 可參考: <a href="http://www.slideshare.net/quipo/rdbms-in-the-social-networks-age">http://www.slideshare.net/quipo/rdbms-in-the-social-networks-age</a></li>
-<li><a href="http://thinkaurelius.github.io/titan/">http://thinkaurelius.github.io/titan/</a></li>
+<li><a href="http://thinkaurelius.github.io/titan/">http://thinkaurelius.github.io/titan/</a><ul><li>base on cassendra or hbase(雖然對我來說，cassandra 的好處之一是裝起來比較簡單...) : <a href="http://oss-tw.blogspot.tw/2010/04/hbase-vs-cassandra.html">http://oss-tw.blogspot.tw/2010/04/hbase-vs-cassandra.html</a><a href='http://oss-tw.blogspot.tw/2010/04/hbase-vs-cassandra.html'/>&nbsp;</a></li></ul>
+</li>
 <li>今天有查到資料說 Redis 也有 graph 式的操作方式，還有就是如果不是真的需要 graph ，可以用已經有的 wrapper 去作：<a href="http://stackoverflow.com/questions/9302295/nosql-solution-for-persisting-graphs-at-scale">http://stackoverflow.com/questions/9302295/nosql-solution-for-persisting-graphs-at-scale</a></li>
 <li>國網中心有 Hadoop 實驗平台 <a href="http://hadoop.nchc.org.tw/">http://hadoop.nchc.org.tw/</a>。如果像 Titan 可以使用 HBase 做 backend 在上面也許不錯？只是要有門路就是了</li></ul>
 
