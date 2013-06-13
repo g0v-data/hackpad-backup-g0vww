@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Language" content="en-us" />
-<meta name="version" content="4505"/>
+<meta name="version" content="4567"/>
 <style>body {font-family:Helvetica}ul.comment{list-style-image:url('https://hackpad.com/static/img/comment.png');} ul.task{list-style-image:url('https://hackpad.com/static/img/unchecked.png');}ul.taskdone{list-style-image:url('https://hackpad.com/static/img/checked.png');} </style><title>/1715$0Anf3xIpVRq</title>
 </head>
 <body><h2>世界奇觀</h2><p><img src='http://www.hawkaoc.net/bbs/data/attachment/forum/dvbbs/20031071133156749.jpg'/></p><p></p><h2>置頂討論區</h2><ul class="comment"><li>雖然不是什麼公司計畫，可是我覺得我們會需要一個定期的討論。畢竟這個計畫可能不是密集衝刺一兩週就可以做好的專案。</li>
@@ -60,8 +60,12 @@
 <li>superset: 在反向查詢時會有必要？</li>
 <li>alias: 雙向關係</li>
 <li>update: for immutable objects, and time-related relation; unidirectional</li></ul>
-</li>
-<li>objects 因此種類可以隨 stream-in 能提供的各種資源而定，並應該儘量豐富化，例如<ul><li>person</li>
+</ul>
+<ul style="list-style: none;"><li><br/></li></ul>
+</ul>
+<ul class="comment"><li>後來設想一些使用情境發現 connection 可能還是要有一個類似「名字」的輔助欄位方便搜尋。不然同樣都是 subset，人從屬於組織跟某個計畫從屬於組織，是否不好分？當然使用者可以條件搜尋人+subset，可是如果他可以直接搜尋「隸屬於」這樣的 connection name，也許比較好用？</li></ul>
+
+<ul><li>objects 因此種類可以隨 stream-in 能提供的各種資源而定，並應該儘量豐富化，例如<ul><li>person</li>
 <li>event</li>
 <li>time</li>
 <li>place</li>
@@ -73,9 +77,9 @@
 </li>
 <li>objects 是可以自由增加的，隨著 stream-in 的來源增加可預想會暴量，所以<b>需要即時處理或效能吃緊的 application 應該要自建應用程式自己的 database 或 memcached 去做最佳最佳化 ，只在有需要時批次或背景處理的把資料拉回來</b></li>
 <li>stream-out client 所產生的處理後資料也可以回輸成為 stream-in 的來源</li>
-<li>因為只提供最 general 的格式與操作，所以進階的使用方式，部份可以包成 SDK 提供，再由其中某些函式呼叫或編譯自動生成數個基本操作</li></ul>
-</li>
-<li>議題<ul><li>可以想見物件與關聯的數目會非常多，查詢等一定要做並行化</li>
+<li>因為只提供最 general 的格式與操作，所以進階的使用方式，部份可以包成 SDK 提供，再由其中某些函式呼叫或編譯自動生成數個基本操作</li>
+<li>議題</li>
+<li>可以想見物件與關聯的數目會非常多，查詢等一定要做並行化</li>
 <li>真的要做可能要使用 NoSQL 或 GraphDatabase 讓 scale-out 與 CRUD 可以適合我們這計劃的用途</li>
 <li>除了新聞跟立法院公報外，思考還有哪些資料來源可以被接上的，要怎麼接，以及有哪些需求 client application<ul><li>法律的連結與比對資訊？&nbsp;</li></ul>
 </li>
@@ -84,11 +88,10 @@
 <li>mutable object 的修改會有疑慮是取用該資源的 application ，在該資源更改後會需要做更新，尤其是有快取等情況</li>
 <li>對於一個資源是 mutable 或 immutable，是由 stream-in 方決定的，不是由 client applications 決定</li>
 <li>immutable 可以兼容於 mutable 的操作：比如要找更改後的版本，immutable 只要順著 update 的關係下找就好</li></ul>
-</li></ul>
 </li>
-<li>相關資源<ul><li><a href="https://github.com/thinkaurelius/titan/wiki"><a href='https://github.com/thinkaurelius/titan/wiki'/>https://github.com/thinkaurelius/titan/wiki</a></a>&nbsp;</li></ul>
-<ul style="list-style: none;"><li>&quot;Titan is a distributed <a href='http://en.wikipedia.org/wiki/Graph_database'/>graph database</a> optimized for storing and querying<a href='http://en.wikipedia.org/wiki/Graph_(mathematics)'/>graphs</a> represented over a cluster of machines. &quot;</li></ul>
-</ul>
+<li>相關資源</li>
+<li><a href="https://github.com/thinkaurelius/titan/wiki"><a href='https://github.com/thinkaurelius/titan/wiki'/>https://github.com/thinkaurelius/titan/wiki</a></a>&nbsp;</li></li>
+<li>&quot;Titan is a distributed <a href='http://en.wikipedia.org/wiki/Graph_database'/>graph database</a> optimized for storing and querying<a href='http://en.wikipedia.org/wiki/Graph_(mathematics)'/>graphs</a> represented over a cluster of machines. &quot;</li></ul>
 
 <h2>開發進度</h2><p><img src='http://'/></p><ul><li>目前最需要的是要去訂出我們內部要有哪些操作，以及對應的開放 APIs<ul><li>最基本的應該可以參考 graph database 去設計</li>
 <li>例如：增刪改節點 (object)，增刪改連結(connection)</li>
