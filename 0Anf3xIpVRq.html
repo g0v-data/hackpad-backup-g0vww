@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Language" content="en-us" />
-<meta name="version" content="4567"/>
+<meta name="version" content="4578"/>
 <style>body {font-family:Helvetica}ul.comment{list-style-image:url('https://hackpad.com/static/img/comment.png');} ul.task{list-style-image:url('https://hackpad.com/static/img/unchecked.png');}ul.taskdone{list-style-image:url('https://hackpad.com/static/img/checked.png');} </style><title>/1715$0Anf3xIpVRq</title>
 </head>
 <body><h2>世界奇觀</h2><p><img src='http://www.hawkaoc.net/bbs/data/attachment/forum/dvbbs/20031071133156749.jpg'/></p><p></p><h2>置頂討論區</h2><ul class="comment"><li>雖然不是什麼公司計畫，可是我覺得我們會需要一個定期的討論。畢竟這個計畫可能不是密集衝刺一兩週就可以做好的專案。</li>
@@ -164,7 +164,8 @@
 <li>今天有查到資料說 Redis 也有 graph 式的操作方式，還有就是如果不是真的需要 graph ，可以用已經有的 wrapper 去作：<a href="http://stackoverflow.com/questions/9302295/nosql-solution-for-persisting-graphs-at-scale">http://stackoverflow.com/questions/9302295/nosql-solution-for-persisting-graphs-at-scale</a></li>
 <li>國網中心有 Hadoop 實驗平台 <a href="http://hadoop.nchc.org.tw/">http://hadoop.nchc.org.tw/</a>。如果像 Titan 可以使用 HBase 做 backend 在上面也許不錯？只是要有門路就是了</li></ul>
 
-<ul class="comment"><li>我覺得我可以開始架設 graph database 去作分散式運算等測試，先把佈署與系統相關的部份熟悉好。與此同時，LittleQ 可以開始用像 Redis 做小型的版本</li></ul>
+<ul class="comment"><li>我覺得我可以開始架設 graph database 去作分散式運算等測試，先把佈署與系統相關的部份熟悉好。與此同時，LittleQ 可以開始用像 Redis 做小型的版本</li>
+<li>我有些用Neo4j資料庫的經驗，做過一些跟人與人資料關聯的分析系統</li></ul>
 
 <p>wikipedia graph database: <a href="http://en.wikipedia.org/wiki/Graph_database">http://en.wikipedia.org/wiki/Graph_database</a></p><p></p><p></p><h2>Stream-in 資料來源</h2><ul><li>未經整理的現有資料完全由人工或程式去剖析成關係圖是很累的事情。我覺得需要做一個視覺化工具，去幫助現有資料從&nbsp; JSON 轉成 物件-關係圖<ul><li>Ex: {&quot;gov-organization&quot;: [ {&nbsp; &quot;person&quot;: &quot;M19&quot;, &quot;title&quot;: &quot;President&quot;, &quot;since&quot;: &quot;2011&quot;&nbsp; } ] }</li></ul>
 <ul style="list-style: none;"><li>要輔助在 &quot;gov-organization&quot; 跟其子元素中建立關係。比如 subset；</li>
